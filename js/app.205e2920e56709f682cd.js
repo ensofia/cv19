@@ -1111,8 +1111,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.show = this.advices[idx].show;
       this.key = key;
       this.text = text;
-      // var x=document.getElementById("test-form")
-      //  x.classList.remove("mfp-hide")
     }
   }
 });
@@ -3728,7 +3726,7 @@ __WEBPACK_IMPORTED_MODULE_0_survey_vue__["Survey"].cssType = "bootstrap";
             vm.downloadWithVueResource(pdf.url, pdf.name);
           });
           surveyPDF.save();
-          ///TODO: remove after fixing pdf download 
+          ///TODO: remove after fixing pdf download
 
           // setTimeout(function() {
           //   vm.$store.state.user.data = null;
@@ -3769,6 +3767,7 @@ __WEBPACK_IMPORTED_MODULE_0_survey_vue__["Survey"].cssType = "bootstrap";
       const link = document.createElement("a");
       link.href = pdfurl;
       link.setAttribute("download", name + ".pdf"); //or any other extension
+      link.setAttribute("target", "_blank");
       document.body.appendChild(link);
       link.click();
     },
@@ -3786,7 +3785,14 @@ __WEBPACK_IMPORTED_MODULE_0_survey_vue__["Survey"].cssType = "bootstrap";
         url: pdfurl,
         responseType: "arraybuffer"
       }).then(response => {
+
         this.forceFileDownload(pdfurl, name);
+
+        let blob = new Blob([response.data], { type: "application/pdf" });
+        let link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.download = name + ".pdf";
+        link.click();
       }).catch(() => console.log("error occured"));
     }
   },
@@ -3798,10 +3804,7 @@ __WEBPACK_IMPORTED_MODULE_0_survey_vue__["Survey"].cssType = "bootstrap";
       savePDF: {},
       question: {},
       notComplete: true,
-      pdfs: [{
-        url: "http://www.pdf995.com/samples/pdf.pdf",
-        name: "test"
-      }]
+      pdfs: []
     };
   }
 });
@@ -7105,4 +7108,4 @@ __WEBPACK_IMPORTED_MODULE_0_vue__["default"].use(__WEBPACK_IMPORTED_MODULE_1_vue
 /***/ })
 
 },[333]);
-//# sourceMappingURL=app.332859f8dc9328cadb76.js.map
+//# sourceMappingURL=app.205e2920e56709f682cd.js.map
